@@ -1,0 +1,60 @@
+Bokeh info:
+
+callback can be used in:
+	tools(SelectTool, HoverTool, TapTool)
+	widgets (AbstractButton, InputWidget )
+	Tabs - A callback to run in the browser whenever the button is activated
+	Range - A callback to run in the browser whenever the range is updated
+	ColumnsDataSource - A callback to run in the browser whenever the selection is changed  + AjaxDataSource, BlazeDataSource, ServerDataSource
+	
+The CustomJS callback has:
+	args - arg mappings
+	code - the JS code
+	
+	
+model === data that is to be drawn (range, data source objects)
+documents === set of models
+
+
+	
+box választó, ami csak sávot tud választani
+BoxSelectTool(dimensions=["width"])
+
+vizszintes hoover - mindent kiválaszt (index objektumba rak) ami a kurzorral egy magasságban van
+p.add_tools(HoverTool(tooltips=None, callback=callback, renderers=[cr], mode='hline'))
+
+
+autoload:
+https://github.com/bokeh/bokeh/issues/3231
+js, tag = autoload_static(chart, CDN, "http://www.joshhaines.com/js/bokeh.js")   lehet, hogy ez mégsem az...
+
+Can I make a default selection from Python? That would initialize the graph and maybe trigger the execution of JS callback.
+
+
+glyphs have data_source attr (also on python side):
+https://github.com/bokeh/bokeh/blob/master/examples/plotting/server/selection_histogram.py
+
+source.on_change('selected',self,'update_filter')
+Select.on_change ...
+Button.on_change ...
+https://github.com/bokeh/bokeh/blob/0.9.0/examples/glyphs/population_server.py
+https://github.com/bokeh/bokeh/blob/0.9.0/examples/glyphs/taylor_server.py
+
+
+https://groups.google.com/a/continuum.io/forum/#!topic/bokeh/-fPwXKBfWHs
+plot.get('renderers') 
+renderer.get('data_source')
+
+TODO: what object have on_change?
+def callback(obj, attr, old, new):
+    ...
+source.on_change('selected', callback)
+textInput.on_change('value', update_title)  (works only in version 0.11)
+for w in ["MVA_1", "MVA_2"]:
+    getattr(self, w).on_change('value', self, 'input_change')
+self.toggle.on_click(self.checkbox_handler)
+
+Can I call on_change(server side) from a JS script???
+No real answers yet. You can call any Python script from JS in a standard way, but with Bokeh...?
+
+http://chdoig.github.com/scipy2015-blaze-bokeh - some server examples
